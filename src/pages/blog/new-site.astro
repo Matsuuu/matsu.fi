@@ -1,0 +1,21 @@
+---
+import "./blog-styles.css";
+
+import Layout from '../../layouts/Layout.astro';
+import BlogNav from '../../components/BlogNav.astro';
+---
+
+<BlogNav />
+
+<Layout title="Welcome to Astro.">
+	<main>
+		<h1>New <span class="text-gradient">Homepage</span></h1>
+
+        <div class="blog-text">
+            <p>Decided that I might have to finally start looking at these static site generators
+            and start re-writing my long postponed homepage</p>
+
+            <p>I heard astro was nice and I enjoyed the basic template so here we are.</p>
+        </div>
+	</main>
+</Layout>

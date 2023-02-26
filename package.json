@@ -1,0 +1,19 @@
+{
+	"name": "",
+	"type": "module",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "astro dev",
+		"start": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview",
+		"astro": "astro"
+	},
+	"dependencies": {
+		"@astrojs/lit": "^1.2.0",
+		"@shoelace-style/shoelace": "^2.1.0",
+		"@webcomponents/template-shadowroot": "^0.1.0",
+		"astro": "^2.0.15",
+		"lit": "^2.6.1"
+	}
+}

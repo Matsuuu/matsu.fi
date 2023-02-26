@@ -1,0 +1,24 @@
+---
+import "./blog-styles.css";
+
+import Layout from '../../layouts/Layout.astro';
+import Card from '../../components/Card.astro';
+---
+
+<Layout title="Welcome to Astro.">
+	<main>
+		<h1><span class="text-gradient">Blog</span></h1>
+		<p class="instructions">
+            I occasionnally write about my thoughts on tech and working around it.
+        </p>
+
+
+		<ul role="list" class="link-card-grid">
+			<Card
+				href="/blog/new-site"
+				title="New homepage"
+				body="New site, new me"
+			/>
+		</ul>
+	</main>
+</Layout>
