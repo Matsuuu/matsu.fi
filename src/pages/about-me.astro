@@ -1,7 +1,43 @@
 ---
 import "./base-styles.css";
 
-import Layout from '../../layouts/Layout.astro';
-import Card from '../../components/Card.astro';
-import SubPageNav from "../../components/SubPageNav.astro";
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import SubPageNav from "../components/SubPageNav.astro";
 ---
+
+<Layout>
+
+    <SubPageNav />
+
+	<main>
+		<h1>About <span class="text-gradient">Me</span></h1>
+		<p class="instructions">
+            I'm Matias, mostly known as Matsu, a Seasoned Software Developer with great passion for API's, Architecture, Developer Tooling, Web Components and PWA.
+        </p>
+
+
+		<ul role="list" class="link-card-grid">
+			<Card
+				href="https://www.linkedin.com/in/matias-huhta-b0b159106/"
+				title="LinkedIn"
+				body="My 'professional' profile"
+			/>
+			<Card
+				href="https://twitter.com/matsuuu_"
+				title="Twitter"
+				body="Random ramblings, hypeing, beer and open source"
+			/>
+			<Card
+				href="https://github.com/Matsuuu"
+				title="GitHub"
+				body="My open source stuff and some more"
+			/>
+			<Card
+				href="https://matsu.beer/"
+				title="Matsu Brewing"
+				body="My homebrewing endeavours"
+			/>
+		</ul>
+	</main>
+</Layout>
