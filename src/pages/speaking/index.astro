@@ -1,0 +1,65 @@
+---
+import "../base-styles.css";
+
+import Layout from '../../layouts/Layout.astro';
+import Card from '../../components/Card.astro';
+import SubPageNav from "../../components/SubPageNav.astro";
+---
+
+<Layout title="Welcome to Astro.">
+
+    <SubPageNav />
+
+	<main>
+		<h1><span class="text-gradient">Speaking</span></h1>
+		<p class="instructions">I tend get myself tangled with speaking at conferences and meetups about subjects that are currently close to me in my projects, mostly open source ones.
+
+            <br><br>
+            Here are some of those talks
+        </p>
+
+
+		<ul role="list" class="link-card-grid">
+			<Card
+				href="https://www.fooconf.fi/speakers#matias-huhta"
+				title="The Future of Development Tooling - Sharing is Caring"
+				body="FooConf 2023"
+			/>
+			<Card
+				href="https://www.youtube.com/watch?v=otTm4W5VWu4"
+				title="Let's write a Language Server!"
+				body="Turku <3 Frontend November meetup 2022"
+			/>
+			<Card
+				href="https://www.youtube.com/watch?v=8OwnSr9Mnko"
+				title="You might not need a mouse"
+				body="Aurajoki Overflow November meetup 2022"
+			/>
+			<Card
+				href="https://www.youtube.com/watch?v=oy1hiAO5Cl0"
+				title="Avoiding vendor lock-in through Web Components"
+				body="React Finland 2022"
+			/>
+			<Card
+				href="https://react-finland.fi/2022/workshops#web-components-write-once-run-anywhere"
+				title="Workshop: Web Components - Write once, run anywhere"
+				body="React Finland 2022"
+			/>
+			<Card
+				href="https://meetabit.com/events/helsinkijs-november-2021"
+				title="Writing Javascript, but with types!"
+				body="HelsinkiJS November Meetup 2021"
+			/>
+			<Card
+				href="https://www.youtube.com/watch?v=V3PqSabh7b0"
+				title="Web Components: Utilizing the Web Platform"
+				body="Turku <3 Frontend October meetup 2021"
+			/>
+			<Card
+				href="https://www.youtube.com/watch?v=fgtS_nfMOtw"
+				title="Web Components in React"
+				body="React Finland 2021"
+			/>
+		</ul>
+	</main>
+</Layout>
