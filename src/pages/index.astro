@@ -19,22 +19,22 @@ import Card from '../components/Card.astro';
         </p>
 		<ul role="list" class="link-card-grid">
 			<Card
-				href="/blog"
+				href="${import.meta.env.BASE_URL}/blog"
 				title="Blog"
 				body="Occasional brain dumps"
 			/>
 			<Card
-				href="/speaking"
+				href="${import.meta.env.BASE_URL}/speaking"
 				title="Speaking"
 				body="Information on my presentations from meetups and talks"
 			/>
 			<Card
-				href="/projects"
+				href="${import.meta.env.BASE_URL}/projects"
 				title="Projects"
 				body="Highlights of projects I've built or worked on"
 			/>
 			<Card
-				href="/about-me"
+				href="${import.meta.env.BASE_URL}/about-me"
 				title="About me"
 				body="Experience, contacts, etc."
 			/>
