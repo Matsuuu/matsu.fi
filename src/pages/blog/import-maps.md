@@ -1,5 +1,5 @@
 Now that import maps are supported throughout all browsers, web development has taken a big step forwards. 
-We can start writing web apps like it's 2015 again! All that is needed is a couple of mapped imports and we are off!
+We can start writing web apps like its 2015 again! All that is needed is a couple of mapped imports and we are off!
 
 ## What are import maps?
 
@@ -23,11 +23,11 @@ And not have to build / bundle to project *at all*!
 
 ### Wait what, how?
 
-Well this was quite leading but... 🥁 Import Maps!
+Well this was quite leading but.. Import Maps!
 
 ## Setup
 
-To get started using import maps, you can start a new project or start fiddling with an existing one. I decided to look into a project I've been working on.
+To get started using import maps, you can start a new project or start fiddling with an existing one. I decided to look into a project Ive been working on.
 
 The project is an internal tool for our company and has the following dependencies:
 
@@ -42,7 +42,7 @@ The project is an internal tool for our company and has the following dependenci
 ```
 
 As we can see, we have two external dependencies and one internal tool. In the modern way of packaging our application, we would be of course required to package this project
-using some bundler like [ESBuild](https://esbuild.github.io/) or [Rollup](https://rollupjs.org/). But with import maps, we can instead utilize CDN's to deliver our packages and completely 
+using some bundler like [ESBuild](https://esbuild.github.io/) or [Rollup](https://rollupjs.org/). But with import maps, we can instead utilize CDNs to deliver our packages and completely 
 eliminate the bundling step.
 
 ### HTML Side
@@ -86,33 +86,33 @@ the browser that we want to be using this piece of script as a import map JSON e
 Looking inside of the entry, we can see that we have mappings for all of our dependencies. Most of our entries are mapped with a single entry, but sometimes we might want to access 
 subfolders inside of our dependency. In those cases we just provide a secondary entry with a suffixed `/` (forwards slash) to denote subfolder entries.
 
-Note that you can utilize multiple CDN's and even local file systems for your imports!
+Note that you can utilize multiple CDNs and even local file systems for your imports!
 
 ### JS Side
 
 Well how does this look like on the JS side then? Well. As we discussed before, import maps allow you to use your dependencies as if you were bundling them. 
 
-What this means is that if you have everything setup correctly with your import maps, in the best case scenario you don't have to do *any* Javascript changes! Isn't that awesome!
+What this means is that if you have everything setup correctly with your import maps, in the best case scenario you dont have to do *any* Javascript changes! Isnt that awesome!
 
 
 ## Some general gotchas
 
 ### Be wary of packaging
 
-CDN's are quite advanced today and might package your package in different formats. If you take a look at the same package through [unpkg](https://unpkg.com/lit@2.7.0/index.js) and through [JSDelivr's ESM bundler](https://cdn.jsdelivr.net/npm/lit@2.7.0/+esm),
-you can see that the outputs don't match. So if one CDN isn't working for you, sometimes another will.
+CDNs are quite advanced today and might package your package in different formats. If you take a look at the same package through [unpkg](https://unpkg.com/lit@2.7.0/index.js) and through [JSDelivrs ESM bundler](https://cdn.jsdelivr.net/npm/lit@2.7.0/+esm),
+you can see that the outputs dont match. So if one CDN isnt working for you, sometimes another will.
 
-### Code completions don't look at the cloud
+### Code completions dont look at the cloud
 
-Even if we are developing using CDN'd dependencies, your editors might want to have those files locally to use their data for completion, code action and general language support info. So it's good
+Even if we are developing using CDNd dependencies, your editors might want to have those files locally to use their data for completion, code action and general language support info. So its good
 practice to still keep your package.json up to date and npm install the packages locally too.
 
 ### Some packages might require some extra pathing
 
 For some packages that might lazy load part of their assets, you might need to configure some extra parameters to support their functionality with import maps. 
 
-For example Shoelace's [icons](https://shoelace.style/components/icon) are lazily loaded from local or CDN routes and might require you to [set the base path](https://shoelace.style/getting-started/installation?id=setting-the-base-path) for
-said assets to load from. This setup usually is quite minimal though and shouldn't be bloating your codebase any more than a single line.
+For example Shoelaces [icons](https://shoelace.style/components/icon) are lazily loaded from local or CDN routes and might require you to [set the base path](https://shoelace.style/getting-started/installation?id=setting-the-base-path) for
+said assets to load from. This setup usually is quite minimal though and shouldnt be bloating your codebase any more than a single line.
 
 
 
