@@ -1,0 +1,20 @@
+---
+import "./blog-styles.css";
+import {Content as Post} from "./event-based-state-content.md";
+
+import Layout from '../../layouts/Layout.astro';
+import BlogNav from '../../components/BlogNav.astro';
+
+---
+
+<BlogNav />
+
+<Layout>
+	<main>
+		<h1>Event Based <span class="text-gradient">State Management</span></h1>
+
+        <div class="blog-text">
+        <Post />
+        </div>
+	</main>
+</Layout>
