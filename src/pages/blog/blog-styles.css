@@ -29,10 +29,12 @@ h1 {
 .blog-text code {
     font-size: 0.875em;
     font-weight: bold;
-    background: rgba(var(--accent), 12%);
     color: rgb(var(--accent));
     border-radius: 4px;
     padding: 0.3em 0.45em;
+}
+p code {
+    background: rgba(var(--accent), 12%);
 }
 .instructions strong,
 .blog-text strong {

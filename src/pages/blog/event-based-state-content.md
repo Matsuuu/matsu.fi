@@ -306,7 +306,8 @@ export function getStateProxy(stateObject, thisInstance) {
  * @param {string[]} propPath
  */
 function setupProxy(targetObject, thisInstance, propPath) {
-    // TODO: Continue from here
+    // Setting up a basic proxy, we want to create a new Proxy object 
+    // targeting our object that will contain the reactive properties
     return new Proxy(targetObject, {
         /**
          * @param {any} target
@@ -314,7 +315,9 @@ function setupProxy(targetObject, thisInstance, propPath) {
          * @param {unknown} receiver
          */
         get(target, prop, receiver) {
-            // console.log("GET", { target, prop, receiver });
+            // For the getters, we could of course look at something like memoization,
+            // but for this example, we are just using Reflection to handle getters 
+            // in the default way they would be handled.
             return Reflect.get(target, prop, receiver);
         },
 
@@ -324,10 +327,16 @@ function setupProxy(targetObject, thisInstance, propPath) {
          * @param {unknown} value
          */
         set(obj, prop, value) {
-            // console.log("SET ", { obj, prop, value });
+            // Now for the setters, here's where we're actually doing something interesting.
+            // First off, we are grabbing the so called changedata, so we take the old value
+            // of our property as well as the new value.
             const oldValue = Reflect.get(obj, prop);
             const reflectResult = Reflect.set(obj, prop, value);
 
+            // And here we are just managing the property access path. This doesn't do anything
+            // special when accessing single level depth state objects but when you go 2 or more
+            // levels deeper, we will need the whole path of objects that got updated and that's 
+            // where this comes in handy.
             const eventPropPaths = [...propPath, prop];
             let propKey = "";
             while (eventPropPaths.length > 0) {
@@ -338,10 +347,28 @@ function setupProxy(targetObject, thisInstance, propPath) {
                 thisInstance.broadcast(new EventManagerUpdated(propKey, oldValue, value));
             }
 
+            // So imagine a state object
+            // #state = {
+            //      user: {
+            //          name: ""
+            //      }
+            // }
+
+            // When the user's name changes, we want to trigger the event for both,
+            // the ones listening to changes on `user` as well as those listenining
+            // to changes on just `user.name`.
+
+            // By parsing the whole path and sending EventmanagerUpdated events for each level,
+            // we are able to broadcast these changes across all of our listeners.
+
             return reflectResult
         }
     });
 }
+
+// And here, for those nested objects, we are just iterating through them 
+// recursively to apply a proxy to each layer, saving the property accessors path 
+// while we're going deeper.
 
 /**
  * @param {Object} targetObject
@@ -361,3 +388,196 @@ function setupNestedProxy(targetObject, thisInstance, propPath) {
 
 }
 ```
+
+**So yeah. That was quite some code that we added to our codebase. How are we going to use it?**
+
+Well the usage part is actually quite simple. We can take a look at our eventmanager.
+
+```javascript
+    constructor() {
+        super();
+
+        this.#state = getStateProxy(this.#state, this);
+    }
+```
+
+That's it! That' literally the only change we have to do to our eventmanager!
+And with this proxy change, we can now get rid of all of our `EventManagerUpdated` event 
+dispatches we had written around our `handleEvent` function!
+
+### And listening to the events isn't hard either.
+
+```javascript
+// event-manager-updated.js
+export class EventManagerUpdated extends Event {
+    /**
+     * @param {string} key
+     * @param {unknown} oldValue
+     * @param {unknown} newValue
+     */
+    constructor(key, oldValue, newValue) {
+        // We can dynamically name our event to make the API event simpler to use.
+        super(EventManagerUpdated.forProperty(propertyName));
+
+        this.key = key;
+        this.oldValue = oldValue;
+        this.newValue = newValue;
+    }
+
+    /**
+     * @param {string} propertyName
+     */
+    static forProperty(propertyName) {
+        return EventManagerUpdated.name + "-" + propertyName;
+    }
+}
+
+// any-view.js
+EventManager.addEventListener(EventManagerUpdated.forProperty("user.name"), (ev) => {
+    console.log("User.name updated!");
+    updateView();
+});
+```
+
+Or we could write up a small utility method to help us out
+
+```javascript
+/**
+ * @param {string} propKey
+ * @param {EventListenerOrEventListenerObject} callback
+ */
+listen(propKey, callback) {
+    return this.addEventListener(EventManagerUpdated.forProperty(propKey), callback);
+}
+```
+
+After which our users could just utilize it as follows:
+
+```javascript
+EventManager.listen("user.name", (ev) => {
+    console.log("User.name updated!");
+    updateView();
+});
+
+EventManager.listen("user", (ev) => {
+    console.log("User updated!");
+    updateView();
+});
+```
+
+
+# Chapter 5: Putting it all together
+
+So there ya have it! We have state management system we can freely build upon, while relying on existing 
+web standards, utilizing native events and overall adding 0 dependencies to your project!
+
+And what's fun, is that you can freely control if you want to utilize this system in an synchronous
+or an asynchronous way. Allowing you to completely cater the system to your own needs.
+
+Here's the complete EventManager class we built. And the actual meat and bones of things is
+event shorter as this example provided some utility methods.
+
+```javascript
+import { ButtonClicked } from "./events/button-clicked.js";
+import { EventManagerInitialized } from "./events/event-manager-initialized.js";
+import { EventManagerUpdated } from "./events/event-manager-updated.js";
+import { UsernameChanged } from "./events/user-name-changed.js";
+import { UserPhoneNumberUpdated } from "./events/user-phone-number-updated.js";
+import { UserSettingsReset } from "./events/user-settings-reset.js";
+import { getStateProxy } from "./reactive-properties.js";
+
+
+class EventManager extends EventTarget {
+
+    #state = {
+        buttonClickedCount: 0,
+        user: {
+            name: undefined,
+            contact: {
+                phone: undefined
+            }
+        },
+        alerts: []
+    };
+
+    MANAGED_EVENTS = [
+        UsernameChanged,
+        ButtonClicked,
+        UserPhoneNumberUpdated
+    ]
+
+    constructor() {
+        super();
+
+        this.#state = getStateProxy(this.#state, this);
+
+        this.MANAGED_EVENTS.forEach(ev => {
+            // This maps all of the events to the `handleEvent` function
+            this.addEventListener(ev.name, this)
+        });
+
+        // Could do some async calls and therefor initialization might not be synchronous...
+        this.broadcast(new EventManagerInitialized());
+    }
+
+    /**
+     * @param {string} propKey
+     * @param {EventListenerOrEventListenerObject} callback
+     */
+    listen(propKey, callback) {
+        return this.addEventListener(EventManagerUpdated.forProperty(propKey), callback);
+    }
+
+
+    /**
+     * @param {Event} ev
+     */
+    handleEvent(ev) {
+        if (ev instanceof UsernameChanged) {
+            this.#state.user.name = ev.userName
+
+            if (ev.isUserNameCleared()) {
+                this.broadcast(new UserSettingsReset());
+            }
+            return;
+        }
+
+        if (ev instanceof ButtonClicked) {
+            this.#state.buttonClickedCount += 1;
+        }
+
+        if (ev instanceof UserPhoneNumberUpdated) {
+            this.#state.user.contact.phone = ev.phone;
+        }
+    }
+
+    /**
+     * Broadcast an event to everyone listening to said event 
+     * in the EventManager instance.
+     * @param {Event} ev
+     */
+    broadcast(ev) {
+        this.dispatchEvent(ev);
+    }
+
+    getButtonClickCount() {
+        return this.#state.buttonClickedCount;
+    }
+
+    getUserName() {
+        return this.#state.user.name;
+    }
+}
+
+
+let instance = new EventManager();
+
+export { instance as EventManager };
+export { EventManager as EventManagerClass };
+```
+
+The whole codebase with examples can be found on my GitHub at https://github.com/Matsuuu/event-based-state-management
+
+If you found this article interesting or anything, please let me know in [Twitter](https://twitter.com/matsuuu_) 
+or [mastodon](https://mastodon.world/@matsuuu) ! I'd love to start some discussion on this subject 
+and want to hear your thoughts around this approach.
