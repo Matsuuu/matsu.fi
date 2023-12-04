@@ -417,7 +417,7 @@ export class EventManagerUpdated extends Event {
      */
     constructor(key, oldValue, newValue) {
         // We can dynamically name our event to make the API event simpler to use.
-        super(EventManagerUpdated.forProperty(propertyName));
+        super(EventManagerUpdated.forProperty(key));
 
         this.key = key;
         this.oldValue = oldValue;
