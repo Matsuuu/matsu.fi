@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+@theme {
+    --color-primary: #ff38a2;
+    --color-white: #fae8b6;
+}
+
+:root {
+    height: 100%;
+    background: #202330;
+    height: 100%;
+}
+
+body {
+    height: 100%;
+}
+
+.offset-1 {
+    animation-delay: 500ms;
+}
+
+.offset-2 {
+    animation-delay: 1000ms;
+}
+.offset-3 {
+    animation-delay: 1500ms;
+}
+
+.glow {
+    background-color: #f2448b;
+    animation-duration: 3s;
+    animation-name: glow;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+}
+
+.glow-text {
+    color: #f2448b;
+    animation-duration: 3s;
+    animation-name: glow-text;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+}
+
+.glow-hover:hover,
+.glow-hover:active {
+    color: var(--color-white);
+    border-color: var(--color-white);
+    animation-duration: 3s;
+    animation-name: glow-from;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+
+    transform: rotateZ(-2.5deg);
+}
+
+.glow-hover {
+    transition: 200ms linear;
+}
+
+@keyframes glow {
+    0% {
+        background-color: #f2448b;
+    }
+
+    50% {
+        background-color: #87c095;
+    }
+
+    100% {
+        background-color: #f2448b;
+    }
+}
+
+@keyframes glow-text {
+    0% {
+        color: #f2448b;
+    }
+
+    50% {
+        color: #87c095;
+    }
+
+    100% {
+        color: #f2448b;
+    }
+}
+
+@keyframes glow-from {
+    0% {
+        color: #f2448b;
+        border-color: #f2448b;
+    }
+
+    50% {
+        color: #87c095;
+        border-color: #87c095;
+    }
+
+    100% {
+        color: #f2448b;
+        border-color: #f2448b;
+    }
+}
