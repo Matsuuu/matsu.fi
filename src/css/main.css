@@ -6,13 +6,17 @@
 }
 
 :root {
-    height: 100%;
     background: #202330;
-    height: 100%;
+    height: auto;
+}
+
+html,
+body {
+    height: auto;
 }
 
 body {
-    height: 100%;
+    margin-bottom: 4rem;
 }
 
 .pinkmare {

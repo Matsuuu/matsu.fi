@@ -5,7 +5,7 @@ import "../components/data-block";
 export function HomeView() {
     return () => html`
         <div
-            class="flex md:justify-between justify-center md:items-center h-full gap-8 mx-8 md:flex-row flex-col md:max-w-[60vw] md:mx-auto"
+            class="flex md:justify-between justify-center md:items-center h-full gap-8 mx-8 md:flex-row flex-col md:max-w-[60vw] md:mx-auto mt-[20vh]"
         >
             <div class="flex flex-col">
                 <h1 class="text-2xl text-white">Matias <b class="glow-text offset-2">"Matsu"</b> Huhta</h1>

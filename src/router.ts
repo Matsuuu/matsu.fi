@@ -2,6 +2,7 @@ import { HomeView } from "./views/HomeView";
 import { RenderRootNode, html, render } from "lit";
 import { Suunta } from "suunta";
 import { ProjectsView } from "./views/ProjectsView";
+import { WorkView } from "./views/WorkView";
 
 const routes = [
     {
@@ -12,6 +13,11 @@ const routes = [
     {
         path: "/projects",
         view: ProjectsView,
+        title: "matsu.fi - Projects",
+    },
+    {
+        path: "/work",
+        view: WorkView,
         title: "matsu.fi - Projects",
     },
 ] as const;
