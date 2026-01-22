@@ -3,6 +3,7 @@
 @theme {
     --color-primary: #ff38a2;
     --color-white: #fae8b6;
+    --color-link: #d9bcef;
 }
 
 :root {
