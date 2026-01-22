@@ -1,18 +1,18 @@
 import { HomeView } from "./views/HomeView";
-import { TechnologiesView } from "./views/TechnologiesView";
 import { RenderRootNode, html, render } from "lit";
 import { Suunta } from "suunta";
+import { ProjectsView } from "./views/ProjectsView";
 
 const routes = [
     {
         path: "/",
         view: HomeView,
-        title: "Matsu Frontend Template - Home",
+        title: "matsu.fi - Home",
     },
     {
-        path: "/technologies",
-        view: TechnologiesView,
-        title: "Matsu Frontend Template - Technologies",
+        path: "/projects",
+        view: ProjectsView,
+        title: "matsu.fi - Projects",
     },
 ] as const;
 

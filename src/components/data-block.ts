@@ -13,7 +13,7 @@ export interface BlockData {
 @customElement("data-block")
 @withTailwind
 export class DataBlock extends LitElement {
-    @property({ type: String })
+    @property({ type: Object })
     blockData: BlockData;
 
     className = "flex aspect-square basis-1/2";
