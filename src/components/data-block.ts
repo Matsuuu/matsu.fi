@@ -16,7 +16,7 @@ export class DataBlock extends LitElement {
     @property({ type: String })
     blockData: BlockData;
 
-    className = "flex aspect-square basis-1/3 ";
+    className = "flex aspect-square basis-1/2";
 
     render() {
         return html`
