@@ -6,9 +6,9 @@ import { Monitor } from "lucide";
 
 export function WorkView() {
     return () => html`
-        <div class="flex flex-col h-full gap-2 mx-auto mt-[20vh] md:max-w-[60vw]">
+        <div class="flex flex-col h-full gap-2 mt-[20vh] md:max-w-[60vw] mx-8 md:mx-auto">
             <back-button></back-button>
-            <div class="flex justify-between gap-18">
+            <div class="flex justify-between md:gap-18 gap-10 md:flex-row flex-col">
                 <div class="flex flex-col gap-2">
                     <h1 class="font-semibold text-2xl text-white inline-flex items-center gap-1">
                         ${LucideIcon(Monitor)} Work
