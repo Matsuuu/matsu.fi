@@ -4,6 +4,7 @@ import { Suunta } from "suunta";
 import { ProjectsView } from "./views/ProjectsView";
 import { WorkView } from "./views/WorkView";
 import { SpeakingView } from "./views/SpeakingView";
+import { MeView } from "./views/MeView";
 
 const routes = [
     {
@@ -25,6 +26,11 @@ const routes = [
         path: "/speaking",
         view: SpeakingView,
         title: "matsu.fi - Speaking",
+    },
+    {
+        path: "/me",
+        view: MeView,
+        title: "matsu.fi - Me",
     },
 ] as const;
 
